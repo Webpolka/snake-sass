@@ -1,0 +1,16 @@
+.header {	
+	background-color: var(--color-bg-header);
+
+	&-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+}
+
+.header-nav {
+	
+	@include xl {
+		display: none;
+	}
+}

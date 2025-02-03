@@ -1,0 +1,434 @@
+@use 'sass:math';
+
+body {
+  background: linear-gradient(45deg, #08041d, #200852);
+  background-attachment: fixed;
+  font-family: "Roboto", sans-serif;
+  padding-top: 1rem;
+}
+
+.game-box {
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.25s ease-in-out 0.25s;
+
+  &.opacity-hidden {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+}
+
+.game-table {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 3rem;
+
+  #score {
+    display: inline-flex;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    padding: 0 2rem;
+    background-color: rgb(0, 0, 128);
+    border-radius: 10px 0 0 0;
+    color: white;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 0 5px 1px #0099fd;
+
+    @include sm {
+      padding: 0 1rem;
+    }
+
+    @include md {
+      font-size: 1.1rem;
+    }
+
+    .fruits-top {
+      display: inline-block;
+      margin-right: 2rem;
+      width: 2rem;
+      height: 2rem;
+      background-image: url('../../images/fruits.png');
+      background-position: center center;
+      /* x y */
+      background-size: cover;
+      background-repeat: no-repeat;
+
+      @include md {
+        width: 1.3rem;
+        height: 1.3rem;
+      }
+
+    }
+
+  }
+
+  #level {
+    display: inline-flex;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    padding: 0 2rem;
+    background-color: rgb(0, 0, 128);
+    border-radius: 0;
+    color: white;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 0 5px 1px #0099fd;
+
+    @include sm {
+      padding: 0 1rem;
+    }
+
+    @include md {
+      font-size: 1.1rem;
+    }
+
+    .cup-top {
+      display: inline-block;
+      margin-right: 2rem;
+      width: 2rem;
+      height: 2rem;
+      background-image: url('../../images/cup.png');
+      background-position: center center;
+      /* x y */
+      background-size: cover;
+      background-repeat: no-repeat;
+
+      @include md {
+        width: 1.3rem;
+        height: 1.3rem;
+      }
+    }
+
+  }
+
+  #TopPauseBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    padding: 0 2rem;
+    background-color: rgb(0, 0, 128);
+    border-radius: 0 10px 0 0;
+    color: white;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 0 5px 1px #0099fd;
+
+    &.active {
+      color: orange;
+      box-shadow: 0 0 25px 1px #69c0fa;
+      background-color: rgb(0, 0, 128, 0.5);
+    }
+
+    &:hover {
+      box-shadow: 0 0 25px 1px #69c0fa;
+      background-color: rgb(0, 0, 128, 0.5);
+    }
+
+    @include sm {
+      padding: 0 1rem;
+    }
+
+    @include md {
+      font-size: 1.2rem;
+    }
+  }
+
+}
+
+#game-field {
+  position: relative;
+  width: 100%;
+  min-width: 100%;
+  min-height: calc(100vh - 6rem);
+  // box-shadow: 0 0 100px 1px #0099fd;  
+  // background-image: url('../../images/snake-field.jpg');
+  background-position: center center;
+  /* x y */
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 0px solid transparent;
+  border-radius: 0 0 rem(10) rem(10);
+  box-shadow: 0 0 5px 1px #0099fd;
+  @include md{
+    min-height: calc(100vh - 10.5rem);
+  }
+
+}
+
+.game-wrap {
+  position: relative;
+}
+
+#game-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: -1;
+
+  .game-bg-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    .cell {
+      position: absolute;
+    }
+  }
+
+}
+
+.snake,
+.fruit,
+.brick {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
+
+.snake {
+  border: 2px solid #2f8a23;
+  border-radius: 50%;
+  background-color: #22fb05;
+  transform: scale(1.5);
+
+  &-head-right {
+    position: relative;
+    border-right-color: rgb(255, 0, 0);
+    transform: scale(1.5);
+    transition: all 0.3s ease-in-out;
+
+    &:before {
+      position: absolute;
+      content: "";
+      top: 10%;
+      right: 0;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: #2f8a23;
+      z-index: 1;
+    }
+
+    &:after {
+      position: absolute;
+      content: "";
+      top: 60%;
+      right: 0;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: #2f8a23;
+    }
+  }
+
+  &-head-left {
+    border-left-color: rgb(255, 0, 0);
+    transform: scale(1.5);
+    transition: all 0.3s ease-in-out;
+
+    &:before {
+      position: absolute;
+      content: "";
+      top: 10%;
+      left: 0;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: #2f8a23;
+      z-index: 1;
+    }
+
+    &:after {
+      position: absolute;
+      content: "";
+      top: 60%;
+      left: 0;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: #2f8a23;
+    }
+  }
+
+  &-head-top {
+    border-top-color: rgb(255, 0, 0);
+    transform: scale(1.5);
+    transition: all 0.3s ease-in-out;
+
+    &:before {
+      position: absolute;
+      content: "";
+      top: 0;
+      right: 10%;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: #2f8a23;
+      z-index: 1;
+    }
+
+    &:after {
+      position: absolute;
+      content: "";
+      top: 0;
+      right: 60%;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: #2f8a23;
+    }
+  }
+
+  &-head-bottom {
+    border-bottom-color: rgb(255, 0, 0);
+    transform: scale(1.5);
+    transition: all 0.3s ease-in-out;
+
+    &:before {
+      position: absolute;
+      content: "";
+      bottom: 0;
+      right: 10%;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: #2f8a23;
+      z-index: 1;
+    }
+
+    &:after {
+      position: absolute;
+      content: "";
+      bottom: 0;
+      right: 60%;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: #2f8a23;
+    }
+  }
+
+  &-body {
+    transform: scale(1.5);
+  }
+
+  &-tile {
+    transform: scale(1.2) !important;
+  }
+}
+
+.brick,
+.fruit {
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.brick {
+  background-image: url('../../images/brick.png');
+  transform: scale(1.7);
+}
+
+.apple {
+  background-image: url('../../images/apple.png');
+}
+
+.banana {
+  background-image: url('../../images/banana.png');
+}
+
+.cabbage {
+  background-image: url('../../images/cabbage.png');
+}
+
+.cheesecake {
+  background-image: url('../../images/cheesecake.png');
+}
+
+.cucumber {
+  background-image: url('../../images/cucumber.png');
+}
+
+.melon {
+  background-image: url('../../images/melon.png');
+}
+
+.kiwi {
+  background-image: url('../../images/kiwi.png');
+}
+
+.lemon {
+  background-image: url('../../images/lemon.png');
+}
+
+.mango {
+  background-image: url('../../images/mango.png');
+}
+
+.orange {
+  background-image: url('../../images/orange.png');
+}
+
+.peach {
+  background-image: url('../../images/peach.png');
+}
+
+.pineapple {
+  background-image: url('../../images/pineapple.png');
+}
+
+.tomato {
+  background-image: url('../../images/tomato.png');
+}
+
+.watermelon {
+  background-image: url('../../images/watermelon.png');
+}
+
+.big {
+  transform: scale(2.5);
+}
+
+.vlip {
+  background-color: #bd5b37;
+  transform: scale(2.5);
+}
+
+.light {
+  background-color: rgb(45, 78, 45);
+}
+
+.dark {
+  background-color: rgb(39, 120, 39);
+}
+.level-number{
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  font-size: 10rem;
+  color: rgb(249, 196, 6);
+  font-weight: bold;
+  transition: all 0.5s ease-in-out;
+  &.active{
+    top: 50%;
+    opacity: 1;
+  }
+}

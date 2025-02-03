@@ -1,0 +1,17 @@
+footer {
+	background-color: var(--color-bg-footer);
+	color: var(--color-main);
+
+	a {
+		color: var(--color-link);	
+	}
+
+	.footer {
+		&__copyright {
+			padding: 0.7rem 0;
+			text-align: center;
+			font-size: 0.85rem;
+			border-top: 1px solid #e68a1a;
+		}
+	}
+}
