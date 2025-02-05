@@ -2,8 +2,8 @@
 	position: fixed;
 	top: 40%;
 	left: 50%;
-	width: 35vw;	
-	height: 20rem;
+	width: 35vw;
+	height: 50%;
 	transform: translate(-50%, -50%) scale(0);
 	transition: all 0.5s ease-in-out;
 	z-index: -100;
@@ -12,22 +12,23 @@
 	background-color: transparent;	
 
 	@include xxl {
-		width: 60%;
+		width: 20%; 
+		height: 40%;
 	}
 
 	@include md {
-		width: 80%;
-		height: 25rem;
+		width: 30%;
+		height: 33%;
 	}
 
 	@include sm {
-		width: 80%;
-		height: 20rem;
+		width: 60%;
+		height: 45%;
 	}
 
 	@include xs {
-		width: 90%;
-		height: 20rem;
+		width: 70%;
+		height: 30%;
 	}
 
 	&.popup--show {
@@ -42,6 +43,7 @@
 		background-position: center center;
 		background-size: cover;
 		background-repeat: no-repeat;
+		border: 4px solid  rgb(31, 246, 3);
 
 		&.start-picture {
 			height: 100%;
@@ -52,7 +54,7 @@
 
 		&.lost-picture {
 			height: 100%;
-			background-image: url('../../images/gameover.png');
+			background-image: url('../../images/gameover.jpg');
 			border-radius: rem(10);
 		}
 
@@ -78,7 +80,7 @@
 			height: 100%;
 
 			li {
-				color: white;
+				color: rgb(31, 246, 3);
 				font-weight: bolder;
 				font-size: 1.5rem;
 				text-transform: uppercase;
@@ -118,8 +120,9 @@
 
 			.score-count,
 			.level-count {
-				color: rgb(0, 0, 128);
+				color: rgb(31, 246, 3);
 				font-size: 3rem;
+				text-shadow: 0 0 4px rgb(0,0,0,1);
 			}
 
 			.score-icon {
@@ -155,8 +158,8 @@
 		background-color: rgb(0, 0, 128);
 		padding: 0.5rem;
 		border-radius: rem(10);
-		box-shadow: 0 0 15px 1px #69c0fa;		
-		display: none;		
+		box-shadow: 0 0 15px 1px #69c0fa;
+		display: none;
 
 		h3 {
 			text-align: center;
@@ -174,11 +177,12 @@
 		.popupBtn {
 			text-align: center;
 			width: 50%;
-			padding: 0.5rem;
+			padding: 1rem 0.5rem;
 			background-color: rgb(0, 0, 128);
 			border-radius: 10px;
-			color: white;
-			font-size: 1.5rem;
+			border: 4px solid  rgb(31, 246, 3);
+			color: rgb(31, 246, 3);
+			font-size: 1.2rem;
 			text-transform: uppercase;
 			transition: all 0.3s ease-in-out;
 			box-shadow: 0 0 5px 1px #0099fd;
@@ -189,7 +193,10 @@
 			}
 
 			@include md {
-				font-size: 1.2rem;
+				font-size: 0.8rem;
+			}
+			@include sm {
+				font-size: 1rem;
 			}
 		}
 	}

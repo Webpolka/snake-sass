@@ -105,7 +105,6 @@ var level = 1;
 var levelTurn = level;
 var game;
 var direction;
-var antiDirection;
 var fieldWidth;
 var fieldHeight;
 var gameOn = true;
@@ -225,12 +224,6 @@ function adaptiveField() {
 
 // Игровой цикл
 function gameLoop() {
-
-    // if(direction == 'right') antiDirection = 'left'
-    // if(direction == 'left') antiDirection = 'right'
-    // if(direction == 'up') antiDirection = 'down'
-    // if(direction == 'down') antiDirection = 'up'
-
     if (level == 1 && score == 0) { levelUp(levelBool); levelBool = false }
     if (level == 2 && score == 0) { levelUp(levelBool); levelBool = false }
     if (level == 3 && score == 0) { levelUp(levelBool); levelBool = false }
@@ -250,24 +243,9 @@ function gameLoop() {
         turnStack = null
     }
 }
-// -------------------------- для подгонки стилей при горизонтальном телефлне --------------------
-mobileHorizontal()
-function mobileHorizontal(){
-    if (document.querySelector('body').offsetHeight <= 500 && document.querySelector('body').offsetWidth >= 1400) {
-        document.querySelector('.popup').style.top = 35 + '%';
-        document.querySelector('.popup').style.height = 12 + "rem";
-        document.querySelector('.popup').style.width = 25 + "%";        
-    } else {
-        document.querySelector('.popup').style.removeProperty('height');
-        document.querySelector('.popup').style.removeProperty('width');       
-        document.querySelector('.popup').style.removeProperty('top');       
-
-    }
-}
 
 window.addEventListener('resize', (e) => {
-    setTimeout(() => {
-        mobileHorizontal()
+    setTimeout(() => {        
         fieldWidth = (parseInt(gameField.offsetWidth / cellSize) * cellSize);
         fieldHeight = (parseInt(gameField.offsetHeight / cellSize) * cellSize);
         colNum = parseInt(gameField.offsetWidth / cellSize)
@@ -301,24 +279,20 @@ function changeDirection(keyCode) {
 
     // 37: влево, 38: вверх, 39: вправо, 40: вниз
     if (keyCode === 37 && direction !== "right") {
-        turnStack = 'left';
-        // turnStackAnti = 'right';
+        turnStack = 'left';       
         if (canTurn) { direction = "left"; canTurn = false; }
 
     } else if (keyCode === 38 && direction !== "down") {
-        turnStack = 'up';
-        // turnStackAnti = 'down';
+        turnStack = 'up';        
         if (canTurn) { direction = "up"; canTurn = false; }
 
     } else if (keyCode === 39 && direction !== "left") {
-        turnStack = 'right';
-        // turnStackAnti = 'left';
+        turnStack = 'right';        
         if (canTurn) { direction = "right"; canTurn = false; }
 
 
     } else if (keyCode === 40 && direction !== "up") {
-        turnStack = 'down';
-        // turnStackAnti = 'up';
+        turnStack = 'down';        
         if (canTurn) { direction = "down"; canTurn = false; }
     }
 }
@@ -502,9 +476,9 @@ function resetGame() {
     // Обнуляем количество очков
     score = 0;
     level = levelTurn;
-    if (level === 1) { speed = 175; fruitLevel = 3 }
-    if (level === 2) { speed = 135; fruitLevel = 2 }
-    if (level === 3) { speed = 105; fruitLevel = 2 }
+    if (level === 1) { speed = 200; fruitLevel = 3 }
+    if (level === 2) { speed = 150; fruitLevel = 2 }
+    if (level === 3) { speed = 120; fruitLevel = 2 }
     levelBool = true;
 
 }
@@ -512,9 +486,9 @@ function resetGame() {
 // Запуск игры
 function gameStart() {
     if (gameOn) {
-        if (level === 1) { speed = 175; fruitLevel = 3 }
-        if (level === 2) { speed = 135; fruitLevel = 2 }
-        if (level === 3) { speed = 105; fruitLevel = 2 }
+        if (level === 1) { speed = 200; fruitLevel = 3 }
+        if (level === 2) { speed = 150; fruitLevel = 2 }
+        if (level === 3) { speed = 120; fruitLevel = 2 }
         let g = document.querySelector('.game-box')
         if (g.classList.contains('opacity-hidden')) g.classList.remove('opacity-hidden')
         direction = "right";
@@ -524,9 +498,9 @@ function gameStart() {
 // Запуск игры
 function continueGame(gameOn, level) {
     if (gameOn) {
-        if (level === 1) { speed = 175; fruitLevel = 3 }
-        if (level === 2) { speed = 135; fruitLevel = 2 }
-        if (level === 3) { speed = 105; fruitLevel = 2 }
+        if (level === 1) { speed = 200; fruitLevel = 3 }
+        if (level === 2) { speed = 150; fruitLevel = 2 }
+        if (level === 3) { speed = 120; fruitLevel = 2 }
         game = setInterval(gameLoop, speed);
     }
 }
@@ -793,7 +767,7 @@ function popClose() {
 // --------------------------- SWIPE MOBILE --------------------------------------------------
 import { Swipe } from './myJsClasses/swipe.js'
 
-var swiper = new Swipe('#game-field', {
+var swiper = new Swipe('#game-touch', {
     edge: 3,
     many: true
 }

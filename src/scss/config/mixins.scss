@@ -187,16 +187,10 @@
 	}
 }
 @mixin xxl () {
-    @media (max-width: 1400px) {
+    @media (min-width: 1201px) {
 		@content;
 	}
 }
-@mixin xxxl () {
-    @media (max-width: 1600px) {
-		@content;
-	}
-}
-
 
 @mixin tablet () {
     @media (max-width: 1220px) {
